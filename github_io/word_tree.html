@@ -1,0 +1,70 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1.1", {packages:["wordtree"]});
+        google.setOnLoadCallback(drawSimpleNodeChart);
+        function drawSimpleNodeChart() {
+            var nodeListData = new google.visualization.DataTable();
+            nodeListData.addColumn('number', 'id');
+            nodeListData.addColumn('string', 'childLabel');
+            nodeListData.addColumn('number', 'parent');
+            nodeListData.addColumn('number', 'size');
+            nodeListData.addColumn('number', 'color');
+            nodeListData.addRow([0, 'Life', -1, 1, 0]);
+            nodeListData.addRow([1, 'Archaea', 0, 1, 0]);
+            nodeListData.addRow([2, 'Eukarya', 0, 5, 0]);
+            nodeListData.addRow([3, 'Bacteria', 0, 1, 0]);
+
+            nodeListData.addRow([4, 'Crenarchaeota', 1, 1, 0]);
+            nodeListData.addRow([5, 'Euryarchaeota', 1, 1, 0]);
+            nodeListData.addRow([6, 'Korarchaeota', 1, 1, 0]);
+            nodeListData.addRow([7, 'Nanoarchaeota', 1, 1, 0]);
+            nodeListData.addRow([8, 'Thaumarchaeota', 1, 1, 0]);
+
+            nodeListData.addRow([9, 'Amoebae', 2, 1, 0]);
+            nodeListData.addRow([10, 'Plants', 2, 1, 0]);
+            nodeListData.addRow([11, 'Chromalveolata', 2, 1, 0]);
+            nodeListData.addRow([12, 'Opisthokonta', 2, 5, 0]);
+            nodeListData.addRow([13, 'Rhizaria', 2, 1, 0]);
+            nodeListData.addRow([14, 'Excavata', 2, 1, 0]);
+
+            nodeListData.addRow([15, 'Animalia', 12, 5, 0]);
+            nodeListData.addRow([16, 'Fungi', 12, 2, 0]);
+
+            nodeListData.addRow([17, 'Parazoa', 15, 2, 0]);
+            nodeListData.addRow([18, 'Eumetazoa', 15, 5, 0]);
+
+            nodeListData.addRow([19, 'Radiata', 18, 2, 0]);
+            nodeListData.addRow([20, 'Bilateria', 18, 5, 0]);
+
+            nodeListData.addRow([21, 'Orthonectida', 20, 2, 0]);
+            nodeListData.addRow([22, 'Rhombozoa', 20, 2, 0]);
+            nodeListData.addRow([23, 'Acoelomorpha', 20, 1, 0]);
+            nodeListData.addRow([24, 'Deuterostomia', 20, 5, 0]);
+            nodeListData.addRow([25, 'Chaetognatha', 20, 2, 0]);
+            nodeListData.addRow([26, 'Protostomia', 20, 2, 0]);
+
+            nodeListData.addRow([27, 'Chordata', 24, 5, 0]);
+            nodeListData.addRow([28, 'Hemichordata', 24, 1, 0]);
+            nodeListData.addRow([29, 'Echinodermata', 24, 1, 0]);
+            nodeListData.addRow([30, 'Xenoturbellida', 24, 1, 0]);
+            nodeListData.addRow([31, 'Vetulicolia', 24, 1, 0]);
+
+            var options = {
+                colors: ['black', 'black', 'black'],
+                wordtree: {
+                    format: 'explicit',
+                    type: 'suffix'
+                }
+            };
+
+            var wordtree = new google.visualization.WordTree(document.getElementById('wordtree_explicit'));
+            wordtree.draw(nodeListData, options);
+        }
+    </script>
+</head>
+<body>
+<div id="wordtree_explicit" style="width: 900px; height: 500px;"></div>
+</body>
+</html>

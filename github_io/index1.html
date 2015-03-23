@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+      google.setOnLoadCallback(drawBarChart);
+      
+      function drawBarChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['pizza', 'pizza amount', { role: 'style' }],
+        ['Mushrooms', 3,''],
+          ['Onions', 1,'#e5e4e2'],
+          ['Olives', 1,'#b87333'],
+          ['Zucchini', 1,'silver'],
+          ['Pepperoni', 2 ,'gold']
+      ]);
+
+      
+      var options = {
+		title: 'How much Pizza i Ate Last Night',
+        width: 1000,
+        height: 563,
+		hAxis:{
+          title: 'Slices',
+          minValue: 0
+        },
+        legend: { position: "none" },
+      	};
+      	
+      	var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+      	chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="barchart" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
