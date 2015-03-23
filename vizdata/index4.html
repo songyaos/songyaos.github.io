@@ -1,0 +1,47 @@
+
+<html>
+<head>
+    <link rel="stylesheet" href="index4_css.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="index4_js.js"></script>
+    <title>interative bar chart</title>
+</head>
+<body>
+
+<!multiple selection ---->
+<div id="welldiv" class="well" style="max-width: 750px; margin: 0 auto 10px;">
+<section class="container-fluid">
+    <div>
+        <select multiple id="leftValues" size="5" multiple></select>
+
+    </div>
+    <div>
+        <div><input type="button" id="btnLeft" class="btn btn-default" value="&lt;&lt;" /></div>
+
+        <input type="button" id="btnRight" class="btn btn-default" value="&gt;&gt;" />
+    </div>
+    <div>
+        <select multiple id="rightValues" size="4" multiple></select>
+    </div>
+</section>
+</div>
+
+<!-- submit button -->
+
+    <button type="button" id="btnPrimary" class="btn btn-primary">Go!</button>
+
+
+
+
+
+
+<!chart container ---->
+<div id="interactive_chart" style="width: 1500px; height: 500px;"></div>
+
+
+</body>
+</html>

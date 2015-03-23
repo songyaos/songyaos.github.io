@@ -1,0 +1,38 @@
+
+<html>
+	<head>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+			google.load("visualization", "1.1", {
+				packages : ["bar"]
+			});
+			google.setOnLoadCallback(drawChart);
+			function drawChart() {
+				var data = google.visualization.arrayToDataTable([['Genre', 'Female', 'Male'], ['Action', 9.02, 13.27], ['Adventure', 5.40, 6.68], ['Comedy', 19.03, 16.31], ['Crime', 3.25, 3.95], ['Drama', 19.40, 16.06], ['Horror', 2.89, 3.87], ['Romance', 9.94, 6.09], ['Sci-Fi', 5.42, 8.14], ['Thriller', 7.97, 9.36]]);
+
+				console.log(data);
+				var options = {
+					axes : {
+						y : {
+							0 : {
+								side : 'left',
+								label : 'Conditional Prob.'
+							} // left y-axis.
+						}
+					}
+				};
+				var csv = google.visualization.dataTableToCsv(data);
+				console.log(csv);
+
+				var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+				chart.draw(data, options);
+			}
+
+		</script>
+
+	</head>
+	<body>
+		<div id="columnchart_material" style="width: 900px; height: 500px;"></div>
+	</body>
+</html>
