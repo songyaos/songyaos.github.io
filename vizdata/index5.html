@@ -1,54 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>D3 Test</title>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <style>
-        div.bar {
-        display: inline-block;
-        width: 20px;
-        height: 75px;   /* We'll override this later */
-            margin-right: 1px;
-        background-color: teal;
-        }
-    </style>
+  <meta charset="utf-8" />
+
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
+       Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <title>Population Graph</title>
+  <meta name="description" content="" />
+  <meta name="author" content="Siyong Zhu" />
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
 </head>
+
 <body>
-<script type="text/javascript">
-//    d3.select("body").append("p").text("New paragraph!");
-//    d3.select("body").append("div").append("p").text("new division");
-    var dataset = [ 25, 7, 5, 26, 11, 8, 25, 14, 23, 19,
-    14, 11, 22, 29, 11, 13, 12, 17, 18, 10,
-    24, 18, 25, 9, 3 ];
-//    d3.select("body").selectAll("p")
-//            .data(dataset)
-//            .enter()
-//            .append("p")
-//            .text(function(d) { return d; })
-//            .style("color", function(d) {
-//                if (d > 15) {   //Threshold of 15
-//                    return "red";
-//                } else {
-//                    return "blue";
-//                }
-//            });;
-
-    d3.select("body").selectAll("div")
-            .data(dataset)
-            .enter()
-            .append("div")
-            .attr("class", "bar")
-            .style("height", function(d) {
-                return 10*d + "px";
-            });
-
-    dataset = [];                        //Initialize empty array
-    for (var i = 0; i < 25; i++) {           //Loop 25 times
-        var newNumber = Math.random() * 30;  //New random number (0-30)
-        dataset.push(Math.round(newNumber));             //Add new number to array
-    }
-    console.log(dataset);
-</script>
+  <script>
+  	
+  	var width = 600;
+  	var height = 600;
+  	d3.csv ('http://www.sfu.ca/~avahdat/CMPT732/country_life_expectancy.csv', function(data){
+  		
+  		var canvas = d3.select('body').append('svg')
+							.attr('width', width)
+							.attr('height', height)
+							.append('g')
+							.attr('transform', 'translate(20, 40)');
+		
+		console.log(data); //debug
+		
+		var maxLife = d3.max(data, function(d){  //Get the max population from the data
+						return parseInt(d.Expectancy);
+					});
+		console.log(maxLife);	//debug
+		
+		
+		var maxPopulation = d3.max(data, function(d){  //Get the max population from the data
+						return parseInt(d.Population);
+					});
+		var minPopulation = d3.min(data, function(d){  //Get the min population from the data
+						return parseInt(d.Population);
+					});
+	    console.log('Population: '+maxPopulation+', '+minPopulation);
+						
+		var xScale = d3.scale.linear()
+					  .domain([65, 84]) //maxLife
+					  .range([0,width-30]);  //shrink the x-axis a bit so the right-most circle won't cut off
+		
+		var yScale = d3.scale.linear()
+					  .domain([4, 1])
+					  .range([0,height]);
+					
+		//Set radius scale  
+		var rScale = d3.scale.linear()
+		              .domain([minPopulation, maxPopulation])
+		              .range([15, 30]); //min/max radius value 10~25
+		              						
+		var colorScale = d3.scale.ordinal()
+						.range(['blue', 'red', 'orange']);
+		//Create axis 
+		var xAxis = d3.svg.axis()
+					.orient('bottom')
+					.scale(xScale);
+								  
+		var yAxis = d3.svg.axis()
+					.orient('left')
+					.scale(yScale);
+		
+		//bind data to circles			  		
+		canvas.selectAll('circle')
+				.data(data)
+				.enter()
+					.append('svg:circle')
+					.attr('cx', function(d) {return xScale(d.Expectancy)})
+					.attr('cy', function(d) {return yScale(d.Fertility)})
+					.attr('r', function(d) {return rScale(d.Population)})
+					.attr('fill', function(d) {return colorScale(d.Region)})
+					.append('svg:title')	//show mouseover text
+					.text(function(d){ 
+						return 'ID: '+d.ID+'\nLife Expectancy:'+
+								d.Expectancy+'\nFertility: '+d.Fertility+
+								'\nRegion: '+d.Region+'\nPopulation: '+d.Population;
+					});
+		
+		canvas.selectAll('text')
+				.data(data)
+				.enter()
+					.append('text')
+					.attr('fill', 'white')
+					.attr('x', function(d) {return xScale(d.Expectancy)-0.5*rScale(d.Population) })
+					.attr('y', function(d) {return yScale(d.Fertility)})
+					.attr('font-size', '0.5em')
+					.text(function(d){ return d.ID});
+					
+		
+		canvas.append('g')
+		      .attr('transform', 'translate(20,0)')
+			  .call(yAxis)
+			  .append('text')
+     		  	.style("text-anchor", "end")
+     		  	.text('Ferility')
+     		  	.attr('transform', 'rotate(-90)')
+     		  .attr('x', 0)
+     		  .attr('y', 20)
+			  
+		canvas.append('g')
+		      .attr('transform', 'translate(0,'+(height-60)+')')
+			  .call(xAxis);
+			  
+	    canvas.append('text')
+	    		.text('Life Expectancy')
+	    		.attr('y', height-60)
+	    		.attr('x', width-130);
+		
+  	});
+  	
+  </script>
 </body>
-</html>    
+</html>
